@@ -3,7 +3,6 @@ package com.bitandik.labs.kotlinbots.dcrover
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion.TAG
 
 class MainActivity : Activity(), WheelCallback {
     private lateinit var connection: NearbyConnection

@@ -1,13 +1,6 @@
 package com.bitandik.labs.kotlinbots.dcrover
 
 import android.util.Log
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion.BACK_LEFT
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion.BACK_RIGHT
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion.FRONT_LEFT
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion.FRONT_RIGHT
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion.TAG
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion._2W
-import com.bitandik.labs.kotlinbots.dcrover.Constants.Companion._4W
 import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.PeripheralManagerService
 import java.io.IOException
@@ -74,41 +67,41 @@ class DCRover(GPIOs: List<String>) {
 }
 
 class DCWheel(gpioAPinName: String, gpioBPinName: String) {
-    var gpioA: Gpio? = null
-    var gpioB: Gpio? = null
+    lateinit var gpioA: Gpio
+    lateinit var gpioB: Gpio
 
     init {
         val service = PeripheralManagerService()
         try {
             gpioA = service.openGpio(gpioAPinName)
-            gpioA?.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
+            gpioA.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
 
             gpioB = service.openGpio(gpioBPinName)
-            gpioB?.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
+            gpioB.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
 
         } catch (e: IOException) {
-            Log.e(Constants.TAG, "Error on PeripheralIO API", e);
+            Log.e(TAG, "Error on PeripheralIO API", e);
         }
     }
 
     fun forward(){
-        gpioA?.value = true
-        gpioB?.value = false
+        gpioA.value = true
+        gpioB.value = false
     }
 
     fun backward() {
-        gpioA?.value = false
-        gpioB?.value = true
+        gpioA.value = false
+        gpioB.value = true
     }
 
     fun stop() {
-        gpioA?.value = false
-        gpioB?.value = false
+        gpioA.value = false
+        gpioB.value = false
     }
 
     fun close() {
-        gpioA?.close()
-        gpioB?.close()
+        gpioA.close()
+        gpioB.close()
     }
 
 }
