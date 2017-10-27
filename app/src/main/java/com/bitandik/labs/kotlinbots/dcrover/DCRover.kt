@@ -3,7 +3,6 @@ package com.bitandik.labs.kotlinbots.dcrover
 import android.util.Log
 import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.PeripheralManagerService
-import java.io.IOException
 
 /**
  * Created by ykro.
@@ -67,21 +66,13 @@ class DCRover(GPIOs: List<String>) {
 }
 
 class DCWheel(gpioAPinName: String, gpioBPinName: String) {
-    lateinit var gpioA: Gpio
-    lateinit var gpioB: Gpio
+    private val service = PeripheralManagerService()
+    private var gpioA: Gpio = service.openGpio(gpioAPinName)
+    private var gpioB: Gpio = service.openGpio(gpioBPinName)
 
     init {
-        val service = PeripheralManagerService()
-        try {
-            gpioA = service.openGpio(gpioAPinName)
-            gpioA.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
-
-            gpioB = service.openGpio(gpioBPinName)
-            gpioB.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
-
-        } catch (e: IOException) {
-            Log.e(TAG, "Error on PeripheralIO API", e);
-        }
+        gpioA.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
+        gpioB.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
     }
 
     fun forward(){
